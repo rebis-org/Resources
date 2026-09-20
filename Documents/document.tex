@@ -1,0 +1,241 @@
+\input shared
+\catcode`\@=11
+\def\corpName{某某}\def\haoStem{某}
+\newcount\doc@norg
+\def\org#1#2#3#4#5{\advance\doc@norg by1\relax\expandafter\def\csname doc@orgshort@\the\doc@norg\endcsname{#2}\expandafter\def\csname doc@orghao@\the\doc@norg\endcsname{#3}\expandafter\def\csname doc@orgref@\the\doc@norg\endcsname{#4}\expandafter\def\csname doc@orgterm@\the\doc@norg\endcsname{#5}\expandafter\xdef\csname doc@orgid@#1\endcsname{\the\doc@norg}}
+\def\joint#1#2#3{\expandafter\def\csname doc@jointid@#1|#2\endcsname{#3}}
+\newcount\doc@ndecree
+\def\decreeauth#1{\advance\doc@ndecree by1\relax\expandafter\def\csname doc@decreeok@#1\endcsname{}}
+\input danwei
+\newcount\doc@sessionBase\doc@sessionBase=2026
+\ifcsname sessionBase\endcsname\doc@sessionBase=\sessionBase\relax\fi
+\doc@geometry{210 true mm}{297 true mm}{28 true mm}{34.58 true mm}{156 true mm}{229.84 true mm}
+\newdimen\doc@u \doc@u=10.39 true mm
+\newdimen\doc@v \doc@v=4.84 true mm
+\newdimen\doc@o \doc@o=2.42 true mm
+\newdimen\doc@q \doc@q=4 true mm
+\newdimen\doc@r \doc@r=0.35 true mm
+\newdimen\doc@s \doc@s=0.25 true mm
+\newdimen\doc@y \doc@y=39.84 true mm
+\newdimen\doc@ya \doc@ya=22.42 true mm
+\newdimen\doc@yb \doc@yb=-4.58 true mm
+\newdimen\doc@ye \doc@ye=0.6 true mm
+\newdimen\doc@wl \doc@wl=170 true mm
+\newdimen\doc@wh \doc@wh=0.7 true mm
+\newdimen\doc@wi \doc@wi=0.25 true mm
+\newdimen\doc@headSize
+\newdimen\doc@sigA
+\newdimen\doc@sigB
+\newdimen\doc@attHang
+\newdimen\footskip
+\ifx\docfangsongfile\undefined\def\docfangsongfile{FandolFang-Regular.otf}\fi
+\ifx\dockaitifile\undefined\def\dockaitifile{FandolKai-Regular.otf}\fi
+\ifx\docheitifile\undefined\def\docheitifile{FandolHei-Regular.otf}\fi
+\ifx\docsongtifile\undefined\def\docsongtifile{FandolSong-Regular.otf}\fi
+\ifx\docxiaobiaofile\undefined\def\docxiaobiaofile{FandolSong-Bold.otf}\fi
+\ifx\mastheadSize\undefined\def\mastheadSize{40pt}\fi
+\doc@mapfonts{\docfangsongfile}{\dockaitifile}{\docheitifile}{\docsongtifile}{\docxiaobiaofile}
+\doc@loadfontmap
+\doc@newface{doc@f@iii}{docfs}{16pt}{doc@wr@iii}{docwestr}
+\doc@newface{doc@k@iii}{dockt}{16pt}{doc@wr@iii}{docwestr}
+\doc@newface{doc@h@iii}{docht}{16pt}{doc@wr@iii}{docwestr}
+\doc@newface{doc@s@iii}{docst}{16pt}{doc@wr@iii}{docwestr}
+\doc@newface{doc@f@iv}{docfs}{14pt}{doc@wr@iv}{docwestr}
+\doc@newface{doc@s@iv}{docst}{14pt}{doc@wr@iv}{docwestr}
+\doc@newface{doc@titleJ}{docxbs}{22pt}{doc@titleW}{docwestb}
+\doc@newface{doc@headJ}{docxbs}{\mastheadSize}{doc@headW}{docwestb}
+\font\doc@refFace=docmono at 14pt
+\def\fangsong{\doc@f@iii\doc@wr@iii}
+\def\kaiti{\doc@k@iii\doc@wr@iii}
+\def\heiti{\doc@h@iii\doc@wr@iii}
+\def\songti{\doc@s@iii\doc@wr@iii}
+\def\fangsongiv{\doc@f@iv\doc@wr@iv}
+\def\songtiiv{\doc@s@iv\doc@wr@iv}
+\def\titleFont{\doc@titleJ\doc@titleW}
+\def\mastheadFont{\doc@headJ\doc@headW}
+\newdimen\doc@ccwd \doc@ccwd=\fontdimen6\doc@f@iii
+\doc@spacing{2\doc@ccwd}{\doc@u}
+\normalbaselineskip=\doc@u
+\normallineskip=0pt
+\normallineskiplimit=-\maxdimen
+\jcharwidowpenalty=500
+\clubpenalty=1500
+\widowpenalty=1500
+\doc@topskip{\doc@f@iii}{\doc@o}
+\def\doc@redpush{\special{color push rgb 1 0 0}}
+\def\doc@redpop{\special{color pop}}
+\def\redRule#1{{\doc@redpush\hrule width\hsize height#1\doc@redpop}}
+\long\def\docset#1#2{\expandafter\def\csname doc@#1\endcsname{#2}}
+\def\docget#1{\ifcsname doc@#1\endcsname\csname doc@#1\endcsname\fi}
+\long\def\docifset#1#2{\ifcsname doc@#1\endcsname#2\fi}
+\long\def\docifsetelse#1#2#3{\ifcsname doc@#1\endcsname#2\else#3\fi}
+\let\doc@nil\relax
+\def\doc@stop{\doc@stop}
+\newcount\doc@idx
+\newcount\doc@n
+\newcount\doc@m
+\newcount\doc@book \doc@book=1
+\newcount\doc@part \doc@part=1
+\newcount\doc@chapter \doc@chapter=1
+\newcount\doc@section \doc@section=1
+\newcount\doc@article \doc@article=1
+\newcount\doc@paragraph \doc@paragraph=1
+\newcount\doc@subparagraph \doc@subparagraph=1
+\def\doc@foreach#1#2#3{\doc@idx=1\relax\doc@foreach@{#1}{#2}{#3}}
+\def\doc@foreach@#1#2#3{\docifset{#1_\the\doc@idx}{#2{\the\doc@idx}{\docget{#1_\the\doc@idx}}\advance\doc@idx by1\relax\docifset{#1_\the\doc@idx}{#3\doc@foreach@{#1}{#2}{#3}}{}}{}}
+\def\doc@join#1#2{\doc@foreach{#1}\doc@join@item{#2}}
+\def\doc@join@item#1#2{#2}
+\def\doc@count#1{\doc@n=0\relax\doc@foreach{#1}\doc@count@item{}}
+\def\doc@count@item#1#2{\advance\doc@n by1}
+\newif\ifdoc@hasComma
+\def\doc@checkComma#1{\doc@hasCommafalse\doc@foreach{#1}\doc@checkComma@item{}}
+\def\doc@checkComma@item#1#2{\edef\doc@val{#2}\edef\doc@tmp{\detokenize\expandafter{\doc@val}、\noexpand\doc@nil}\expandafter\doc@checkComma@a\doc@tmp\doc@stop}
+\def\doc@checkComma@a#1、#2\doc@stop{\ifx#2\doc@nil\else\doc@hasCommatrue\fi}
+\def\anchor{\vbox to0pt{}}
+\def\vskipTo#1{\vskip\dimexpr#1-\pagetotal\relax}
+\def\doc@cr{\unskip\break}
+\def\doc@centerpar#1#2{{\parindent=0pt\leftskip=0pt plus1fil\rightskip=0pt plus1fil\parfillskip=0pt\baselineskip=33pt\lineskiplimit=-\maxdimen\let\\\doc@cr#1#2\par}}
+\def\doc@topalign#1{\dimen2=\dp#1\setbox#1=\hbox{\raise\dimen2\box#1}\dimen0=\ht#1{\baselineskip=0pt\lineskiplimit=1pt\centerline{\doc@redpush\lower\dimen0\box#1\doc@redpop}}\prevdepth=-1000pt}
+\def\fitHead#1{\setbox0=\hbox{\mastheadFont #1}\ifdim\wd0>\hsize\doc@headSize=\dimexpr\mastheadSize*\numexpr64*\number\hsize/\number\wd0\relax/64\relax\jfont\doc@headJ=docxbs at \doc@headSize\font\doc@headW=docwestb at \doc@headSize\setbox0=\hbox{\mastheadFont #1}\fi\doc@topalign0}
+\def\doc@sec@a{密件}\def\doc@sec@b{限件}\def\doc@sec@d{平件}
+\def\secMark{\docifset{secTerm}{\docifsetelse{secLevel}{}{{\errmessage{doc: `secTerm' without `secLevel' is ignored}}}}\docifset{secLevel}{\doc@secCheck\doc@secPrint}}
+\def\doc@secCheck{\edef\doc@secV{\docget{secLevel}}\ifx\doc@secV\doc@sec@a\else\ifx\doc@secV\doc@sec@b\else\ifx\doc@secV\doc@sec@d\else\errmessage{doc: unknown secLevel `\doc@secV' (expected 密件, 限件 or 平件)}\fi\fi\fi\docifset{secTerm}{\ifx\doc@secV\doc@sec@d\errmessage{doc: `secTerm' with 平件 is ignored}\fi}}
+\def\doc@secPrint{\ifx\doc@secV\doc@sec@d\else\noindent{\heiti\docget{secLevel}\docifset{secTerm}{\hskip0.5zw★\hskip0.5zw\docget{secTerm}}{}}\par\fi}
+\def\doc@spd@a{提件}\def\doc@spd@b{急件}\def\doc@spd@c{平件}
+\def\speed{\docifset{speed}{\edef\doc@spdV{\docget{speed}}\ifx\doc@spdV\doc@spd@a\else\ifx\doc@spdV\doc@spd@b\else\ifx\doc@spdV\doc@spd@c\else\errmessage{doc: unknown speed `\doc@spdV' (expected 提件, 急件 or 平件)}\fi\fi\fi\ifx\doc@spdV\doc@spd@c\else\noindent{\heiti\docget{speed}}\par\fi}}
+\def\doc@one{1}
+\def\doc@lookup#1#2#3#4{\expandafter\ifx\csname #1#2\endcsname\relax\errmessage{#3}\else#4\fi}
+\def\doc@withAuth#1{\docifsetelse{auth}{\doc@resolveAuth\doc@resolveWith\ifdoc@authFound#1\fi}{\errmessage{doc: missing `auth' (fixed pairing, see document.tex)}}}
+\def\doc@nomasthead#1{\docifset{masthead}{\errmessage{doc: fixed #1 title, no masthead override}}}
+\def\doc@withV@committee{}\def\doc@withV@commission{}
+\def\doc@type@RES{}\def\doc@type@DEC{}\def\doc@type@SLP{}\def\doc@type@LTR{}
+\def\doc@type@NTS{}\def\doc@type@MEM{}\def\doc@type@REQ{}\def\doc@type@REP{}
+\def\doc@type@SR{}\def\doc@type@PV{}\def\doc@type@WP{}
+\def\doc@mod@Amend{}\def\doc@mod@Corr{}\def\doc@mod@Rev{}\def\doc@mod@Add{}\def\doc@mod@Repr{}
+\def\doc@retire#1{\docifset{#1}{\errmessage{doc: `#1' is retired}}}
+\def\doc@checkRetired{\doc@retire{issuerCode}\doc@retire{copyNo}\doc@retire{docNo}\doc@retire{organ}\doc@retire{joint}\doc@retire{wenYear}\doc@retire{wenSeq}\doc@retire{term}\doc@retire{dangYear}\doc@retire{docType}\doc@retire{dangSeq}\doc@retire{amend}\doc@retire{amendSeq}\doc@retire{jiguan}\doc@retire{huitong}\doc@retire{niandu}\doc@retire{xuhao}\doc@retire{jieci}\doc@retire{dangnian}\doc@retire{xingzhi}\doc@retire{dangxu}\doc@retire{xiuding}\doc@retire{xiuxu}}
+\def\doc@needYear#1{\docifsetelse{#1}{\doc@n=\docget{#1}\relax\ifnum\doc@n<1000 \errmessage{doc: `#1' must be a 4-digit year}\fi\ifnum\doc@n>9999 \errmessage{doc: `#1' must be a 4-digit year}\fi}{\errmessage{doc: missing `#1'}}}
+\def\doc@needSeq#1{\docifsetelse{#1}{\doc@n=\docget{#1}\relax\ifnum\doc@n<1 \errmessage{doc: `#1' must be >= 1}\fi}{\errmessage{doc: missing `#1'}}}
+\newif\ifdoc@authFound
+\def\doc@resolveAuth{\edef\doc@authV{\docget{auth}}\doc@authFoundfalse\expandafter\ifx\csname doc@orgid@\doc@authV\endcsname\relax\errmessage{doc: unknown auth `\doc@authV' (see env.tex)}\else\edef\doc@authI{\csname doc@orgid@\doc@authV\endcsname}\doc@authFoundtrue\fi}
+\newif\ifdoc@withOK
+\def\doc@resolveWith{\def\doc@withRef{}\docifset{with}{\edef\doc@withV{\docget{with}}\doc@withOKfalse\doc@lookup{doc@withV@}{\doc@withV}{doc: unknown with `\doc@withV' (committee or commission)}{\doc@withOKtrue}\ifdoc@withOK\expandafter\ifx\csname doc@jointid@\doc@authV|\doc@withV\endcsname\relax\errmessage{doc: `with' not allowed for this auth (see env.tex)}\else\edef\doc@withRef{\csname doc@jointid@\doc@authV|\doc@withV\endcsname}\fi\fi}}
+\def\doc@haoText{\doc@withAuth{\haoStem\csname doc@orghao@\doc@authI\endcsname〔\doc@needYear{year}\docget{year}〕\doc@needSeq{seq}\docget{seq}号}}
+\def\doc@refType{\docifsetelse{type}{\edef\doc@typeV{\docget{type}}\doc@lookup{doc@type@}{\doc@typeV}{doc: unknown type `\doc@typeV' (RES DEC SLP LTR NTS MEM REQ REP SR PV WP)}{\doc@typeV}.\doc@needSeq{ref-seq}\docget{ref-seq}}{\errmessage{doc: missing `type'}}}
+\def\doc@refMod{\edef\doc@modV{\docget{mod}}\doc@lookup{doc@mod@}{\doc@modV}{doc: unknown mod `\doc@modV' (Amend Corr Rev Add Repr)}{/\doc@modV}.\doc@needSeq{mod-seq}\docget{mod-seq}}
+\def\doc@refSec{\docifset{secLevel}{\edef\doc@secV{\docget{secLevel}}\ifx\doc@secV\doc@sec@a[C]\else\ifx\doc@secV\doc@sec@b[R]\else\ifx\doc@secV\doc@sec@d[U]\else\errmessage{doc: unknown secLevel `\doc@secV' (expected 密件, 限件 or 平件)}\fi\fi\fi}\docifset{speed}{\edef\doc@spdV{\docget{speed}}\ifx\doc@spdV\doc@spd@a[Z]\else\ifx\doc@spdV\doc@spd@b[O]\else\ifx\doc@spdV\doc@spd@c[N]\else\errmessage{doc: unknown speed `\doc@spdV' (expected 提件, 急件 or 平件)}\fi\fi\fi}}
+\def\doc@checkYearMatch{\docifset{year}{\doc@m=\docget{year}\relax\ifnum\doc@n=\doc@m\else\errmessage{doc: `ref-year' must equal `year'}\fi}}
+\def\doc@checkSessionMatch{\docifset{year}{\doc@m=\docget{year}\relax\advance\doc@m by-\doc@sessionBase\advance\doc@m by1\relax\ifnum\doc@n=\doc@m\else\errmessage{doc: `session' does not match `year'}\fi}}
+\def\doc@refText{\doc@withAuth{\docifsetelse{with}{\doc@withRef}{\csname doc@orgref@\doc@authI\endcsname}\expandafter\ifx\csname doc@orgterm@\doc@authI\endcsname\doc@one\doc@needSeq{session}\docget{session}\doc@checkSessionMatch\else\doc@needYear{ref-year}\docget{ref-year}\doc@checkYearMatch\fi/\doc@refType\docifset{mod}{\doc@refMod}\doc@refSec}}
+\def\docNoText{\doc@haoText}
+\newif\ifdoc@found
+\def\doc@checkOneIssuer#1#2{\edef\doc@tmpV{#2}\doc@foundfalse\doc@idx=1\relax\doc@matchIssuerLoop\ifdoc@found\else\errmessage{doc: unknown issuer `#2' (see env.tex)}\fi}
+\def\doc@matchIssuerLoop{\ifnum\doc@idx>\doc@norg\else\edef\doc@exp{\corpName\csname doc@orgshort@\the\doc@idx\endcsname}\ifx\doc@tmpV\doc@exp\doc@foundtrue\fi\advance\doc@idx by1\relax\doc@matchIssuerLoop\fi}
+\def\doc@checkIssuers{\doc@foreach{issuer}\doc@checkOneIssuer{}}
+\newdimen\doc@multiH
+\newdimen\doc@multiW
+\newbox\doc@mbox
+\def\doc@measureRow#1#2{\setbox\doc@mbox=\hbox{\mastheadFont#2}\ifdim\wd\doc@mbox>\doc@multiW\doc@multiW=\wd\doc@mbox\fi}
+\def\doc@centerRow#1#2{\hbox to\doc@multiW{\hss#2\hss}}
+\def\doc@mk@masthead@multi{\doc@multiW=0pt\doc@foreach{issuer}\doc@measureRow{}\setbox2=\vbox{\baselineskip=\dimexpr\mastheadSize*27/20\relax\lineskiplimit=-\maxdimen\mastheadFont\doc@foreach{issuer}\doc@centerRow{}}\doc@multiH=\dimexpr\ht2+\dp2\relax\hbox{\box2\kern1zw\vbox to\doc@multiH{\vss\hbox{\mastheadFont 文件}\vss}}}
+\def\masthead{\doc@checkIssuers\doc@nomasthead{文件}\fitHead{\doc@count{issuer}\ifnum\doc@n>1 \doc@mk@masthead@multi\else\docget{issuer_1}文件\fi}}
+\def\docNo{\doc@checkRetired\docifsetelse{signer_1}{\setbox2=\vbox{\hsize=16zw\parindent=0pt\setbox0=\hbox{\fangsong 签发人：}\hangindent=\wd0\relax\hangafter=1{\fangsong 签发人：}{\kaiti\doc@join{signer}{\quad}}\par}\hbox to\hsize{\kern1zw {\fangsong\docNoText}\hfil\box2\kern1zw}}{\centerline{\fangsong\docNoText}}}
+\def\title{\doc@centerpar\titleFont{\docget{title}}}
+\def\letterHead{\doc@checkIssuers\doc@nomasthead{书函}\fitHead{\doc@join{issuer}{}}}
+\def\doc@forbidLing#1{\docifset{#1}{\errmessage{doc: no hao/ref keys with decreeNo (`#1' forbidden)}}}
+\def\doc@decDi{第}
+\def\doc@decHao{号}
+\def\doc@decStart#1#2\doc@stop{\def\doc@decT{#1}\ifx\doc@decT\doc@decDi\doc@decEnd#2号\doc@stop\else\errmessage{doc: bad decreeNo (must open with 第)}\fi}
+\def\doc@decEnd#1号#2\doc@stop{\def\doc@decT{#2}\ifx\doc@decT\doc@decHao\else\errmessage{doc: bad decreeNo (must close with single 号)}\fi\doc@decCheckNum{#1}}
+\newif\ifdoc@decDigits
+\newif\ifdoc@decBad
+\def\doc@decSp{ }
+\def\doc@decScan#1{\ifx#1\doc@stop\else\ifx#1\doc@decSp\else\ifnum`#1<`0 \doc@decBadtrue\errmessage{doc: bad decreeNo (use Arabic digits)}\else\ifnum`#1>`9 \doc@decBadtrue\errmessage{doc: bad decreeNo (use Arabic digits)}\else\doc@decDigitstrue\fi\fi\fi\expandafter\doc@decScan\fi}
+\def\doc@decCheckNum#1{\doc@decDigitsfalse\doc@decBadfalse\expandafter\doc@decScan#1\doc@stop\ifdoc@decBad\else\ifdoc@decDigits\doc@n=#1\relax\ifnum\doc@n<1 \errmessage{doc: bad decreeNo (number must be >= 1)}\fi\else\errmessage{doc: bad decreeNo (missing number)}\fi\fi}
+\def\doc@lingNo{\edef\doc@decV{\docget{decreeNo}}\expandafter\doc@decStart\doc@decV\doc@stop}
+\def\doc@checkLing{\doc@nomasthead{命令}\docifsetelse{auth}{\doc@resolveAuth\ifdoc@authFound\ifnum\doc@ndecree>0\relax\expandafter\ifx\csname doc@decreeok@\doc@authV\endcsname\relax\errmessage{doc: decreeNo reserved (see decreeauth in env.tex)}\fi\else\errmessage{doc: no decreeauth in env.tex}\fi\fi}{\errmessage{doc: decreeNo requires auth}}\doc@forbidLing{with}\doc@forbidLing{year}\doc@forbidLing{seq}\doc@forbidLing{session}\doc@forbidLing{ref-year}\doc@forbidLing{type}\doc@forbidLing{ref-seq}\doc@forbidLing{mod}\doc@forbidLing{mod-seq}\docifsetelse{decreeNo}{\doc@lingNo}{\errmessage{doc: missing decreeNo (e.g. 第 5 号)}}\docifset{issuer_1}{\ifdoc@authFound\edef\doc@tmpV{\docget{issuer_1}}\edef\doc@exp{\corpName\csname doc@orgshort@\doc@authI\endcsname}\ifx\doc@tmpV\doc@exp\else\errmessage{doc: decreeNo issuer must match auth}\fi\fi}}
+\def\orderHead{\doc@checkIssuers\doc@checkRetired\doc@checkLing\fitHead{\corpName 命令}}
+\def\recipients{\docifset{to_1}{\doc@checkComma{to}{\parindent=0pt\fangsong\ifdoc@hasComma\doc@join{to}{，}\else\doc@join{to}{、}\fi：\par}}}
+\let\lineH=\doc@u
+\let\smallGap=\doc@v
+\let\ruleGap=\doc@q
+\let\ruleHeavy=\doc@r
+\let\headPos=\doc@y
+\let\orderPos=\doc@ya
+\let\letterPos=\doc@yb
+\def\letterRule{\hbox to\hsize{\hss\vbox{\offinterlineskip{\doc@redpush\hrule width\doc@wl height\doc@wh\doc@redpop}\vskip\doc@ye{\doc@redpush\hrule width\doc@wl height\doc@wi\doc@redpop}}\hss}}
+\def\docNoLine{\doc@checkRetired\hbox to\hsize{\hss\fangsong\docNoText}}
+\def\decreeLine{\centerline{\fangsong\docget{decreeNo}}}
+\def\hI#1{\par{\heiti #1}\par}
+\def\hII#1{\par{\kaiti #1}\par}
+\newif\ifdoc@attStarted
+\def\attach#1{\par\ifdoc@attStarted{\leftskip=\doc@attHang\parindent=0pt\fangsong #1\par}\else\doc@attStartedtrue\vskip\doc@u\setbox0=\hbox{\fangsong 附件：}\doc@attHang=\dimexpr\parindent+\wd0\relax{\hangindent=\doc@attHang\relax\hangafter=1\fangsong 附件：#1\par}\fi}
+\newwrite\doc@tocout
+\newread\doc@tocin
+\newif\ifdoc@tocopened
+\def\doc@iffileexists#1#2#3{\openin\doc@tocin=#1\relax\ifeof\doc@tocin\closein\doc@tocin #3\else\closein\doc@tocin #2\fi}
+\def\doc@tocindent#1{\ifnum#1=1 0zw\else\ifnum#1=2 2zw\else 4zw\fi\fi}
+\def\tocEntry#1#2#3{{\leftskip=\doc@tocindent{#1}\parindent=0pt\noindent#2\quad#3\par}}
+\def\doc@writetoc#1#2#3{\ifdoc@tocopened\immediate\write\doc@tocout{\noexpand\tocEntry{#1}{#2}{\detokenize{#3}}}\fi}
+\def\toc{\par\vskip\doc@u{\centerline{\heiti 目\quad 录}\par}\vskip\doc@u\doc@iffileexists{\jobname.toc}{\input\jobname.toc}{}\immediate\openout\doc@tocout=\jobname.toc\doc@tocopenedtrue\vskip\doc@u}
+\def\doc@book@label{第\doc@number\doc@book 编}
+\def\doc@part@label{第\doc@number\doc@part 分编}
+\def\doc@chapter@label{第\doc@number\doc@chapter 章}
+\def\doc@section@label{第\doc@number\doc@section 节}
+\def\doc@article@label{第\doc@number\doc@article 条}
+\def\doc@subparagraph@label{（\doc@number\doc@subparagraph）}
+\def\doc@digit#1{\ifcase#1 零\or 一\or 二\or 三\or 四\or 五\or 六\or 七\or 八\or 九\fi}
+\def\doc@tens#1{\ifnum#1=1 十\else\doc@digit{#1}十\fi}
+\def\doc@two#1{\doc@tens{\number\numexpr(#1)/10\relax}\ifnum\numexpr(#1)-10*((#1)/10)=0 \else\doc@digit{\number\numexpr(#1)-10*((#1)/10)\relax}\fi}
+\def\doc@rest@two#1{\ifnum#1=0 \else\ifnum#1<10 零\doc@digit{#1}\else\doc@two{#1}\fi\fi}
+\def\doc@three#1{\doc@digit{\number\numexpr(#1)/100\relax}百\doc@rest@two{\number\numexpr(#1)-100*((#1)/100)\relax}}
+\def\doc@rest@three#1{\ifnum#1=0 \else\ifnum#1<10 零\doc@digit{#1}\else\ifnum#1<100 零\doc@two{#1}\else\doc@three{#1}\fi\fi\fi}
+\def\doc@four#1{\doc@digit{\number\numexpr(#1)/1000\relax}千\doc@rest@three{\number\numexpr(#1)-1000*((#1)/1000)\relax}}
+\def\doc@rest@four#1{\ifnum#1=0 \else\ifnum#1<10 零\doc@digit{#1}\else\ifnum#1<100 零\doc@two{#1}\else\ifnum#1<1000 零\doc@three{#1}\else\doc@four{#1}\fi\fi\fi\fi}
+\def\doc@five#1{\doc@digit{\number\numexpr(#1)/10000\relax}万\doc@rest@four{\number\numexpr(#1)-10000*((#1)/10000)\relax}}
+\def\doc@number#1{\ifnum#1<10 \doc@digit{#1}\else\ifnum#1<100 \doc@two{#1}\else\ifnum#1<1000 \doc@three{#1}\else\ifnum#1<10000 \doc@four{#1}\else\doc@five{#1}\fi\fi\fi\fi}
+\def\doc@twospace#1#2\doc@nil{#1\quad #2}
+\def\doc@maybetwospace#1#2{\begingroup#1\kanjiskip=0pt\xkanjiskip=0pt\setbox0=\hbox{#2}\ifdim\wd0=2\fontdimen6\font\expandafter\doc@twospace#2\doc@nil\else#2\fi\endgroup}
+\def\doc@level#1#2#3#4#5#6{\par\ifcase#5\or\centerline{#4#2\quad\doc@maybetwospace{#4}{#3}}\or{\parindent=2\doc@ccwd #4#2\quad{\fangsong #3}\par}\or{\parindent=2\doc@ccwd\fangsong #3\par}\fi\ifnum#6>0 \doc@writetoc{#6}{#2}{#3}\fi\global\advance#1 by1}
+\def\book#1{\doc@level{\doc@book}{\doc@book@label}{#1}{\heiti}{1}{1}\global\doc@part=1\relax\global\doc@chapter=1\relax\global\doc@section=1\relax}
+\def\part#1{\doc@level{\doc@part}{\doc@part@label}{#1}{\heiti}{1}{2}\global\doc@chapter=1\relax\global\doc@section=1\relax}
+\def\chapter#1{\doc@level{\doc@chapter}{\doc@chapter@label}{#1}{\heiti}{1}{3}\global\doc@section=1\relax}
+\def\section#1{\doc@level{\doc@section}{\doc@section@label}{#1}{\heiti}{1}{4}}
+\def\article#1{\doc@level{\doc@article}{\doc@article@label}{#1}{\heiti}{2}{0}\global\doc@paragraph=1\relax\global\doc@subparagraph=1\relax}
+\def\paragraph#1{\doc@level{\doc@paragraph}{}{#1}{}{3}{0}\global\doc@subparagraph=1\relax}
+\def\subparagraph#1{\doc@level{\doc@subparagraph}{\doc@subparagraph@label}{#1}{\kaiti}{2}{0}}
+\newif\ifdoc@datedone
+\def\doc@signOff{\par\vskip\doc@u\doc@n=1\relax\doc@signOffLoop\advance\doc@n by-1\relax\setbox0=\hbox{\fangsong\docget{issuerSig_\the\doc@n}}\setbox2=\hbox{\fangsong\docget{date}}\doc@sigA=\wd0\relax\doc@sigB=\wd2\relax\ifdim\doc@sigB>\dimexpr\doc@sigA-2zw\relax\hbox to\hsize{\hss\fangsong\docget{date}\kern2zw}\else\hbox to\hsize{\hss\vbox{\hbox to\doc@sigA{\fangsong\docget{issuerSig_\the\doc@n}\hss}\hbox to\doc@sigA{\kern2zw\fangsong\docget{date}\hss}}\kern2zw}\fi}
+\def\doc@signOffLoop{\ifcsname doc@issuerSig_\the\doc@n\endcsname\hbox to\hsize{\hss\fangsong\docget{issuerSig_\the\doc@n}\kern2zw}\advance\doc@n by1\relax\expandafter\doc@signOffLoop\fi}
+\def\chopDate{\par\vskip3\doc@u\hbox to\hsize{\hss\fangsong\docget{date}\kern4zw}\doc@datedonetrue}
+\def\signSeal{\par\vskip2\doc@u\hbox to\hsize{\kern2zw\vbox to2\doc@u{\vss\hbox{\fangsong\doc@join{signerTitle}{\quad}}\vss}\hfil{\doc@redpush\kaiti\vbox{\hbox{\vrule width0pt height18pt depth9pt\kern6pt\doc@join{signer}{\quad}\kern6pt}}\doc@redpop}\kern4zw}\vskip\doc@u\hbox to\hsize{\hss\fangsong\docget{date}\kern4zw}\doc@datedonetrue}
+\def\doc@mkNote{\docifset{note}{\par\vskip\doc@u{\parindent=2\doc@ccwd\fangsong（\docget{note}）\par}}}
+\def\doc@attPages{\docifset{attTitle_1}{\eject\anchor\doc@idx=1\relax\doc@attLoop}}
+\def\doc@attLoop{\docifset{attTitle_\the\doc@idx}{{\noindent\heiti 附件\the\doc@idx\par}\vskip\doc@u\doc@centerpar\titleFont{\docget{attTitle_\the\doc@idx}}\vskip\doc@u\docifset{attText_\the\doc@idx}{{\fangsong\docget{attText_\the\doc@idx}\par}}\advance\doc@idx by1\relax\docifset{attTitle_\the\doc@idx}{\eject\anchor}{}\expandafter\doc@attLoop}{}}
+\newif\ifdoc@fieldStarted
+\def\doc@fieldRow#1#2{\par\ifdoc@fieldStarted\else\vskip\doc@u\doc@fieldStartedtrue\fi{\leftskip=2zw\setbox0=\hbox{\heiti #1：}\hangindent=\wd0\relax\hangafter=1\noindent{\heiti #1：}{\fangsong #2}\par}}
+\def\present#1{\def\doc@label{出席}\def\doc@names{#1}\doc@collectnext}
+\def\observe#1{\def\doc@label{列席}\def\doc@names{#1}\doc@collectnext}
+\def\when#1{\doc@fieldRow{时间}{#1}}
+\def\where#1{\doc@fieldRow{地点}{#1}}
+\def\chair#1{\doc@fieldRow{主持}{#1}}
+\def\minutes#1{\doc@fieldRow{记录}{#1}}
+\def\doc@collectnext{\futurelet\doc@next\doc@collectdecide}
+\def\doc@collectdecide{\ifx\doc@next\bgroup\expandafter\doc@collectitem\else\expandafter\doc@finishcollect\fi}
+\def\doc@collectitem#1{\edef\doc@names{\doc@names，#1}\doc@collectnext}
+\def\doc@finishcollect{\doc@fieldRow{\doc@label}{\doc@names}}
+\newif\ifdoc@colophon
+\newif\ifdoc@hasRef
+\def\doc@needColophon{\doc@colophonfalse\doc@hasReffalse\docifset{printedBy}{\doc@colophontrue}\docifset{ccUp_1}{\doc@colophontrue}\docifset{cc_1}{\doc@colophontrue}\docifset{ccDown_1}{\doc@colophontrue}\docifset{colophonLine_1}{\doc@colophontrue}\docifset{auth}{\docifset{type}{\doc@colophontrue\doc@hasReftrue}}}
+\def\doc@printLeft{\ifdoc@hasRef{\doc@refFace\doc@refText}\else\docifsetelse{decreeNo}{\corpName}{\docget{printedBy}}\fi}
+\def\doc@printLine{\vskip 2pt\hbox to\hsize{\kern1zw\doc@printLeft\hfil\docifset{printDate}{\docget{printDate}印发}{}\kern1zw}\vskip 2pt}
+\def\doc@ccBlock#1#2{\vskip 2pt{\leftskip=1zw\rightskip=1zw\setbox0=\hbox{\fangsongiv #1：}\hangindent=\wd0\relax\hangafter=1\parindent=0pt\noindent #1：\doc@join{#2}{、}。\par}\vskip 2pt\hrule height\doc@s}
+\def\colophon{\vbox{\fangsongiv\baselineskip=21pt\lineskiplimit=-\maxdimen\hrule height\doc@r\docifset{ccUp_1}{\doc@ccBlock{抄报}{ccUp}}\docifset{cc_1}{\doc@ccBlock{抄送}{cc}}\docifset{ccDown_1}{\doc@ccBlock{抄发}{ccDown}}\doc@idx=1\relax\doc@colophonLoop\ifdoc@hasRef\doc@printLine\else\docifset{printedBy}{\doc@printLine}\fi\hrule height\doc@r}}
+\def\doc@colophonLoop{\docifset{colophonLine_\the\doc@idx}{\vskip 2pt{\leftskip=1zw\rightskip=1zw\parindent=0pt\noindent\docget{colophonLine_\the\doc@idx}\par}\vskip 2pt\hrule height\doc@s\advance\doc@idx by1\relax\expandafter\doc@colophonLoop}{}}
+\footskip=17.2pt
+\footline={\doc@footline}
+\def\doc@footline{\ifodd\pageno\hss{\songtiiv —\kern0.5zw\folio\kern0.5zw—}\kern1zw\else\kern1zw{\songtiiv —\kern0.5zw\folio\kern0.5zw—}\hss\fi}
+\def\letterFoot{\footskip=12.58 true mm\footline={\vbox{\ifnum\pageno>1 \vskip\smallGap\hbox to\hsize{\doc@footline}\vskip\doc@v\fi\hbox to\hsize{\hss\vbox{\offinterlineskip{\doc@redpush\hrule width\doc@wl height\doc@wi\doc@redpop}\vskip\doc@ye{\doc@redpush\hrule width\doc@wl height\doc@wh\doc@redpop}}\hss}\kern0pt}}}
+\def\endDoc{\par\ifdoc@datedone\else\docifsetelse{issuerSig_1}{\doc@signOff\doc@mkNote}{\docifset{date}{\par\vskip\doc@u\hbox to\hsize{\hss\fangsong\docget{date}\kern4zw}\doc@mkNote}}\fi\doc@attPages\doc@needColophon\ifdoc@colophon\vfill\ifodd\pageno\eject\anchor\vfill\fi\colophon\fi\eject\end}
+\catcode`\@=12
+\endinput

@@ -1,0 +1,3 @@
+[submodule "Documents/vendor/ApTeX"]
+	path = Documents/vendor/ApTeX
+	url = git@github.com:clerkma/ptex-ng.git

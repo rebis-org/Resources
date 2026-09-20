@@ -1,0 +1,13 @@
+\catcode`\@=11
+\def\doc@geometry#1#2#3#4#5#6{\ifnum\dpxoutput=0 \dpxoutput=1 \fi\pdfpagewidth=#1\pdfpageheight=#2\pdfhorigin=#3\pdfvorigin=#4\hoffset=0pt\voffset=0pt\hsize=#5\vsize=#6\mag=1000}
+\def\doc@mapfonts#1#2#3#4#5{\special{pdf:mapline docfs unicode #1}\special{pdf:mapline dockt unicode #2}\special{pdf:mapline docht unicode #3}\special{pdf:mapline docst unicode #4}\special{pdf:mapline docxbs unicode #5}}
+\def\doc@loadfontmap{\special{pdf:mapfile shared.map}}
+\def\doc@newface#1#2#3#4#5{\expandafter\jfont\csname #1\endcsname=#2 at #3\relax\expandafter\font\csname #4\endcsname=#5 at #3\relax}
+\long\def\doc@define#1{\expandafter\def\csname #1\endcsname}
+\def\doc@use#1{\csname #1\endcsname}
+\def\doc@rangemap#1#2#3#4#5{#1=#2\relax#3=#4\relax\doc@rangemap@{#1}{#3}{#5}}
+\def\doc@rangemap@#1#2#3{\ifnum#1>#2\else\begingroup\edef\doc@next{\endgroup\csname #3\endcsname{\number#1}}\doc@next\advance#1 by1\relax\expandafter\doc@rangemap@\expandafter{#1}{#2}{#3}\fi}
+\def\doc@spacing#1#2{\autospacing\autoxspacing\kanjiskip=-0.153pt plus0.3pt minus0.2pt\xkanjiskip=0.25zw plus0.15zw minus0.1zw\parindent=#1\parskip=0pt\baselineskip=#2\lineskip=0pt\lineskiplimit=-\maxdimen\tolerance=2000\emergencystretch=1zw\hbadness=10000\vbadness=10000\overfullrule=0pt\everypar={\inhibitglue}}
+\def\doc@topskip#1#2{\setbox0=\hbox{#1 国}\topskip=\dimexpr#2+\ht0\relax\maxdepth=4pt}
+\catcode`\@=12
+\endinput

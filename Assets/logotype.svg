@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="_layer" data-name="layer" viewBox="0 0 600 600">
+  <defs>
+    <style>
+      .st0{fill:#fedc5e}
+    </style>
+  </defs>
+  <path d="M0 0h600v600H0z" style="fill:#f5f2e9"/>
+  <path d="M240.91 164.33h42.1v22.57h-42.1zM304.13 365.52h54.58v33.84h-54.58zM322.66 232.6h30.92v36.26h-30.92z" class="st0"/>
+  <text style="fill:#31322c;font-family:I.Ming-Regular, I.Ming;font-size:165px;glyph-orientation-vertical:0deg;letter-spacing:.15em;text-orientation:upright;writing-mode:tb" transform="matrix(1.05 0 0 1 306 118.62)"><tspan x="0" y="0">鹽梅</tspan></text>
+  <text style="fill:#fedc5e;writing-mode:tb;font-family:LMRoman10-BoldItalic,LMRoman10;font-size:20px;font-style:italic;font-weight:700;glyph-orientation-vertical:90deg;text-orientation:sideways-right" transform="translate(277.08 413.33)"><tspan x="0" y="0">rebis</tspan></text>
+</svg>
