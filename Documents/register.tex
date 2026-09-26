@@ -1,0 +1,72 @@
+\input shared
+\catcode`\@=11
+\input env
+\newcount\reg@cnta
+\newcount\reg@cntb
+\newtoks\reg@toks
+\newcount\reg@rowcnt
+\doc@mapfonts{FandolFang-Regular.otf}{FandolKai-Regular.otf}{FandolHei-Regular.otf}{FandolSong-Regular.otf}{FandolSong-Bold.otf}
+\doc@loadfontmap
+\doc@face{仿宋}{docfs}{14pt}{docwestr}
+\doc@face{楷体}{dockt}{14pt}{docwestr}
+\doc@face{黑体}{docht}{14pt}{docwestr}
+\doc@face{宋体}{docst}{14pt}{docwestr}
+\doc@face{宋体小}{docst}{9pt}{docwestr}
+\doc@face{小标}{docxbs}{22pt}{docwestb}
+\newdimen\reg@zw
+\reg@zw=\fontdimen6\doc@仿宋@j
+\def\registerdate{X年X月X日}
+\footline={\hss\宋体 —\kern0.5zw\folio\kern0.5zw—\hss}
+\def\reg@title{\doc@infoU{股东名册}{\docAuthor}{\docCreator}\centerline{\小标 股东名册}\vskip28pt}
+\def\reg@empty{}
+\def\reg@codebit{\ifx\companycode\reg@empty\else （统一社会信用代码：\companycode）\fi}
+\def\reg@preamble{{\仿宋\parindent=2\reg@zw 根据《中华人民共和国公司法》第五十六条的规定，\corpName\reg@codebit 置备股东名册如下：\par}\vskip18pt}
+\newdimen\reg@rulewd
+\reg@rulewd=0.4pt
+\newdimen\reg@headht
+\reg@headht=12mm
+\newdimen\reg@rowht
+\reg@rowht=10mm
+\newdimen\reg@headbs
+\reg@headbs=9pt
+\newdimen\reg@table@used
+\newcount\reg@ncolumns
+\def\reg@vrule{\vrule width \reg@rulewd}
+\def\reg@col#1#2{\advance\reg@ncolumns by1\relax\doc@define{reg@colwd@\number\reg@ncolumns}{#1}\doc@define{reg@colhd@\number\reg@ncolumns}{#2}\advance\reg@table@used by#1\relax}
+\def\reg@lastcol#1{\advance\reg@ncolumns by1\relax\doc@define{reg@colwd@\number\reg@ncolumns}{\dimexpr\hsize-\reg@table@used-\reg@rulewd*\numexpr\reg@ncolumns+1\relax\relax}\doc@define{reg@colhd@\number\reg@ncolumns}{#1}}
+\reg@col{18mm}{出资证明文书编号}
+\reg@col{26mm}{股东姓名（名称）}
+\reg@col{32mm}{住所}
+\reg@col{22mm}{认缴出资额（万元）}
+\reg@col{20mm}{认缴出资方式}
+\reg@col{20mm}{认缴出资日期}
+\reg@col{22mm}{实缴出资额（万元）}
+\reg@col{20mm}{实缴出资方式}
+\reg@col{20mm}{实缴出资日期}
+\reg@col{22mm}{取得股东资格的日期}
+\reg@col{22mm}{丧失股东资格的日期}
+\reg@lastcol{备注}
+\def\reg@th#1#2{\hbox to #1{\hfil\vbox to \reg@headht{\hsize=#1\relax\parindent=0pt\leftskip=0pt plus1fil\rightskip=0pt plus1fil\parfillskip=0pt\baselineskip=\reg@headbs\lineskiplimit=-\maxdimen\vss\noindent#2\par\vss}\hfil}}
+\def\reg@td#1{\hbox to #1{\vbox to \reg@rowht{}\hfil}}
+\def\reg@cell#1{\reg@toks=\expandafter{\the\reg@toks \reg@vrule#1}}
+\def\reg@build@headcell#1{\reg@cell{\reg@th{\doc@use{reg@colwd@#1}}{\doc@use{reg@colhd@#1}}}}
+\def\reg@build@datacell#1{\reg@cell{\reg@td{\doc@use{reg@colwd@#1}}}}
+\def\reg@namedeftoks#1#2{\expandafter\edef\csname #1\endcsname{\unexpanded\expandafter{#2}}}
+\def\reg@buildrow#1#2{\reg@toks={}\doc@rangemap\reg@cnta{1}\reg@cntb{\reg@ncolumns}{#1}\reg@namedeftoks{reg@#2cells}{\the\reg@toks}}
+\def\reg@table@build{\reg@buildrow{reg@build@headcell}{head}\reg@buildrow{reg@build@datacell}{data}}
+\reg@table@build
+\def\reg@row#1{\nointerlineskip\hbox to \hsize{\doc@use{reg@#1cells}\reg@vrule}\nointerlineskip}
+\def\reg@hrule{\nointerlineskip\hrule height \reg@rulewd\relax\nointerlineskip}
+\newcount\reg@bodyrows
+\reg@bodyrows=10
+\def\reg@table{{\宋体小\offinterlineskip\reg@hrule\reg@row{head}\reg@hrule\reg@rowcnt=0\loop\ifnum\reg@rowcnt<\reg@bodyrows\advance\reg@rowcnt by1\reg@row{data}\reg@hrule\repeat\par}}
+\def\reg@signature{\vfill{\仿宋\hbox to \hsize{\hss 公司盖章：\kern30mm}\vskip12pt\hbox to \hsize{\hss \registerdate\kern30mm}\par}}
+\doc@geometry{297 true mm}{210 true mm}{15 true mm}{15 true mm}{267 true mm}{180 true mm}
+\doc@spacing{2\reg@zw}{24pt}
+\doc@topskip{\仿宋}{8pt}
+\reg@title
+\reg@preamble
+\reg@table
+\reg@signature
+\eject
+\end

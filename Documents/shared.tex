@@ -1,0 +1,52 @@
+\catcode`\@=11
+\def\doc@stop{\doc@stop}
+\def\doc@empty{}
+\def\doc@geometry#1#2#3#4#5#6{\ifnum\dpxoutput=0 \dpxoutput=1 \fi\pdfpagewidth=#1\pdfpageheight=#2\pdfhorigin=#3\pdfvorigin=#4\hoffset=0pt\voffset=0pt\hsize=#5\vsize=#6\mag=1000}
+\def\doc@mapfonts#1#2#3#4#5{\special{pdf:mapline docfs unicode #1}\special{pdf:mapline dockt unicode #2}\special{pdf:mapline docht unicode #3}\special{pdf:mapline docst unicode #4}\special{pdf:mapline docxbs unicode #5}}
+\def\doc@loadfontmap{\special{pdf:mapfile shared.map}}
+\def\doc@newface#1#2#3#4#5{\expandafter\jfont\csname #1\endcsname=#2 at #3\relax\expandafter\font\csname #4\endcsname=#5 at #3\relax}
+\def\doc@face#1#2#3#4{\doc@newface{doc@#1@j}{#2}{#3}{doc@#1@w}{#4}\doc@define{#1}{\csname doc@#1@j\endcsname\csname doc@#1@w\endcsname}}
+\long\def\doc@define#1{\expandafter\def\csname #1\endcsname}
+\def\doc@use#1{\csname #1\endcsname}
+\def\doc@each#1#2{\doc@each@#1#2,\doc@stop,}
+\def\doc@each@#1#2,{\ifx\doc@stop#2\else#1{#2}\expandafter\doc@each@\expandafter#1\fi}
+\def\doc@rangemap#1#2#3#4#5{#1=#2\relax#3=#4\relax\doc@rangemap@{#1}{#3}{#5}}
+\def\doc@rangemap@#1#2#3{\ifnum#1>#2\else\begingroup\edef\doc@next{\endgroup\csname #3\endcsname{\number#1}}\doc@next\advance#1 by1\relax\expandafter\doc@rangemap@\expandafter{#1}{#2}{#3}\fi}
+\def\doc@spacing#1#2{\autospacing\autoxspacing\kanjiskip=-0.153pt plus0.3pt minus0.2pt\xkanjiskip=0.25zw plus0.15zw minus0.1zw\parindent=#1\parskip=0pt\baselineskip=#2\lineskip=0pt\lineskiplimit=-\maxdimen\tolerance=2000\emergencystretch=1zw\hbadness=10000\vbadness=10000\overfullrule=0pt\everypar={\inhibitglue}}
+\def\doc@topskip#1#2{\setbox0=\hbox{#1 国}\topskip=\dimexpr#2+\ht0\relax\maxdepth=4pt}
+\newcount\doc@norg
+\def\doc@row#1#2{\expandafter\def\csname #1\endcsname{#2}}
+\def\org#1#2#3#4#5{\advance\doc@norg by1\relax
+  \doc@row{doc@orgshort@\the\doc@norg}{#2}%
+  \doc@row{doc@orghao@\the\doc@norg}{#3}%
+  \doc@row{doc@orgref@\the\doc@norg}{#4}%
+  \doc@row{doc@orgterm@\the\doc@norg}{#5}%
+  \expandafter\xdef\csname doc@orgid@#1\endcsname{\the\doc@norg}}
+\def\joint#1#2#3{\doc@row{doc@jointid@#1|#2}{#3}}
+\newcount\doc@ndecree
+\def\decreeauth#1{\advance\doc@ndecree by1\relax\doc@row{doc@decreeok@#1}{}}
+\newcount\doc@uN
+\newcount\doc@uM
+\newcount\doc@uV
+\def\doc@uHd{\ifcase\doc@uM 0\or1\or2\or3\or4\or5\or6\or7\or8\or9\or A\or B\or C\or D\or E\else F\fi}
+\def\doc@uD{\edef\doc@uT{\doc@uT\doc@uHd}}
+\def\doc@uEmit#1{\doc@uM=\doc@uN\divide\doc@uM by#1\doc@uD\multiply\doc@uM by#1\advance\doc@uN by-\doc@uM}
+\def\doc@uFour{\doc@uEmit{4096}\doc@uEmit{256}\doc@uEmit{16}\doc@uEmit{1}}
+\def\doc@uTwo{\doc@uEmit{16}\doc@uEmit{1}}
+\def\doc@uc#1{\doc@uN=`#1\relax
+  \ifnum\doc@uN<128 \edef\doc@uT{\doc@uT 00}\doc@uTwo
+  \else\ifnum\doc@uN<65536 \doc@uFour
+  \else \advance\doc@uN by-65536 \doc@uV=\doc@uN
+    \doc@uM=\doc@uV \divide\doc@uM by1024 \doc@uN=\doc@uM \advance\doc@uN by55296 \doc@uFour
+    \multiply\doc@uM by1024 \advance\doc@uV by-\doc@uM \doc@uN=\doc@uV \advance\doc@uN by56320 \doc@uFour
+  \fi\fi}
+\def\doc@uloop#1{\ifx#1\doc@stop\else\doc@uc{#1}\expandafter\doc@uloop\fi}
+\def\doc@uHexify#1{\def\doc@uT{}\expandafter\doc@uloop#1\doc@stop\edef\doc@uHex{\doc@uT}}
+\def\doc@infoU#1#2#3{\begingroup
+  \edef\doc@uRaw{#1}\doc@uHexify\doc@uRaw\edef\doc@uHexT{\doc@uHex}%
+  \edef\doc@uRaw{#2}\doc@uHexify\doc@uRaw\edef\doc@uHexA{\doc@uHex}%
+  \edef\doc@uRaw{#3}\doc@uHexify\doc@uRaw\edef\doc@uHexC{\doc@uHex}%
+  \edef\doc@uOut{\noexpand\special{pdf:docinfo<< /Title <FEFF\doc@uHexT> /Author <FEFF\doc@uHexA> /Creator <FEFF\doc@uHexC> >>}}%
+  \expandafter\endgroup\doc@uOut}
+\catcode`\@=12
+\endinput
