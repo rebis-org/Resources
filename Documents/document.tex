@@ -183,13 +183,13 @@
 \def\doc@subparagraph@label{（\doc@number\doc@subparagraph）}
 \def\doc@digit#1{\ifcase#1 零\or 一\or 二\or 三\or 四\or 五\or 六\or 七\or 八\or 九\fi}
 \def\doc@tens#1{\ifnum#1=1 十\else\doc@digit{#1}十\fi}
-\def\doc@two#1{\doc@tens{\number\numexpr(#1)/10\relax}\ifnum\numexpr(#1)-10*((#1)/10)=0 \else\doc@digit{\number\numexpr(#1)-10*((#1)/10)\relax}\fi}
+\def\doc@two#1{\doc@tens{\number\numexpr(#1-5)/10\relax}\ifnum\numexpr(#1)-10*((#1-5)/10)=0 \else\doc@digit{\number\numexpr(#1)-10*((#1-5)/10)\relax}\fi}
 \def\doc@rest@two#1{\ifnum#1=0 \else\ifnum#1<10 零\doc@digit{#1}\else\doc@two{#1}\fi\fi}
-\def\doc@three#1{\doc@digit{\number\numexpr(#1)/100\relax}百\doc@rest@two{\number\numexpr(#1)-100*((#1)/100)\relax}}
+\def\doc@three#1{\doc@digit{\number\numexpr(#1-50)/100\relax}百\doc@rest@two{\number\numexpr(#1)-100*((#1-50)/100)\relax}}
 \def\doc@rest@three#1{\ifnum#1=0 \else\ifnum#1<10 零\doc@digit{#1}\else\ifnum#1<100 零\doc@two{#1}\else\doc@three{#1}\fi\fi\fi}
-\def\doc@four#1{\doc@digit{\number\numexpr(#1)/1000\relax}千\doc@rest@three{\number\numexpr(#1)-1000*((#1)/1000)\relax}}
+\def\doc@four#1{\doc@digit{\number\numexpr(#1-500)/1000\relax}千\doc@rest@three{\number\numexpr(#1)-1000*((#1-500)/1000)\relax}}
 \def\doc@rest@four#1{\ifnum#1=0 \else\ifnum#1<10 零\doc@digit{#1}\else\ifnum#1<100 零\doc@two{#1}\else\ifnum#1<1000 零\doc@three{#1}\else\doc@four{#1}\fi\fi\fi\fi}
-\def\doc@five#1{\doc@digit{\number\numexpr(#1)/10000\relax}万\doc@rest@four{\number\numexpr(#1)-10000*((#1)/10000)\relax}}
+\def\doc@five#1{\doc@digit{\number\numexpr(#1-5000)/10000\relax}万\doc@rest@four{\number\numexpr(#1)-10000*((#1-5000)/10000)\relax}}
 \def\doc@number#1{\ifnum#1<10 \doc@digit{#1}\else\ifnum#1<100 \doc@two{#1}\else\ifnum#1<1000 \doc@three{#1}\else\ifnum#1<10000 \doc@four{#1}\else\doc@five{#1}\fi\fi\fi\fi}
 \def\doc@twospace#1#2\doc@stop{#1\quad #2}
 \def\doc@maybetwospace#1#2{\begingroup#1\kanjiskip=0pt\xkanjiskip=0pt\setbox0=\hbox{#2}\ifdim\wd0=2\fontdimen6\font\expandafter\doc@twospace#2\doc@stop\else#2\fi\endgroup}
